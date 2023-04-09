@@ -1,29 +1,33 @@
 import java.util.Scanner;
+import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new  Scanner(System.in);
-        is
 
         while (true){
             printMenu();
             int command = scanner.nextInt();
 
             if (command == 1 ) {
-                for (int i = 1; i <= 3; i++) {
-                    String string = String.format("%02d", i);
-                    Month month = new Month(string);
-                    month.parsing("resources/m.2021" + string + ".csv");
-                }
+                String filePath = "m.202103.csv";
+                Reader reader = new Reader();
+                List<String> fileContents = reader.readFileContents(filePath);
 
+                Month month = new Month(fileContents);
+                month.process();
 
 
             } else if (command == 2 ) {
-                Year year2021 = new Year();
-                year2021.parsing(); ;
+                String filePath = "resources/y.2021.csv";
+                Reader reader = new Reader();
+                List<String> fileContents = reader.readFileContents(filePath);
+
+                Year year = new Year(fileContents);
+                year.process();
+
 
             } else if (command == 3) {
-                Year year2021 = new Year();
-                year2021.getSum();
+
 
 
 
