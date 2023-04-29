@@ -6,10 +6,6 @@ public  class YearReport
     public int expense;
     public  int month ;
 
-    public int ACTUAL_YEAR ;
 
-    public int getMonth() {
-        return month;
-    }
 
 }

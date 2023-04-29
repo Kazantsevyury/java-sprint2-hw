@@ -2,22 +2,31 @@ package controller;
 import data.CsvReader;
 import data.MonthReportStorage;
 import data.YearReportStorage;
+import logic.MonthReportLoader;
+import logic.MonthsReportMaker;
 import logic.YearReportLoader;
 import logic.YearReportMaker;
 
 import java.util.Scanner;
 
 public class AppController {
+
     CsvReader csvReaderreader = new CsvReader();
     int ACTUAL_YEAR = 2021;
     private final YearReportLoader yearReportLoader;
     private final YearReportMaker yearReportMaker;
+    private final MonthReportLoader monthReportLoader;
+    private final MonthsReportMaker monthsReportMaker;
     public  AppController()
     {
-        //MonthReportStorage monthReportStorageStorage = new MonthReportStorage();
-        YearReportStorage yearReportStorage = new YearReportStorage();
-        yearReportLoader = new YearReportLoader(yearReportStorage);
-        yearReportMaker = new YearReportMaker(yearReportStorage);
+
+        YearReportStorage yearReportStorage = new YearReportStorage(ACTUAL_YEAR);
+        yearReportLoader = new YearReportLoader(yearReportStorage,ACTUAL_YEAR);
+        yearReportMaker = new YearReportMaker(yearReportStorage,ACTUAL_YEAR);
+
+        MonthReportStorage monthReportStorage = new MonthReportStorage(ACTUAL_YEAR);
+        monthReportLoader = new MonthReportLoader(monthReportStorage,ACTUAL_YEAR);
+        monthsReportMaker = new MonthsReportMaker(monthReportStorage,ACTUAL_YEAR);
 
     }
     public void start()
@@ -38,12 +47,13 @@ public class AppController {
             }
             else if (command.equals("1")  ) {
                 isMonthRepUp = true;
+                monthReportLoader.load();
 
             }
             else if (command.equals("2")  ) {
                 isYearRepUp = true;
 
-                yearReportLoader.load( ACTUAL_YEAR );
+                yearReportLoader.load();
 
             }
             else if (command.equals("3") ) {
@@ -58,6 +68,8 @@ public class AppController {
             }
             else if (command.equals("4")  ) {
                 if ( isMonthRepUp ) {
+                    monthsReportMaker.printMonthReport();
+
 
                 }
                 else {
@@ -85,7 +97,10 @@ public class AppController {
 
 
     }
+    public int getYearNum() {
+        return ACTUAL_YEAR;
 
+    }
     private void printMenu()
     {
         System.out.println("\n"+
