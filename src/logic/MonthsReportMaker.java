@@ -1,15 +1,11 @@
 package logic;
 import data.MonthReport;
 import data.MonthReportStorage;
-
 import java.util.List;
-import java.util.ArrayList;
 
 public class MonthsReportMaker {
-    private int ACTUAL_YEAR;
-
+    private final int ACTUAL_YEAR;
     private final MonthReportStorage monthReportStorage;
-
     public MonthsReportMaker(MonthReportStorage monthReportStorage, int ACTUAL_YEAR) {
         this.monthReportStorage = monthReportStorage;
         this.ACTUAL_YEAR = ACTUAL_YEAR;
@@ -18,48 +14,39 @@ public class MonthsReportMaker {
 
     public void printMonthReport() {
         System.out.println("Рассматриваемый год: "+  ACTUAL_YEAR);
-        System.out.println("----------------------------");
-        int mostProfitableProduct = 0;
-        String mostProfitableProductName = "" ;
-        int theBiggestExpense = 0;
-        String theBiggestExpenseName= "" ;
+        System.out.println("--------------------------------------------------------");
+
         GetMonthsNamesRU nameRU = new GetMonthsNamesRU();
         for (Integer month : monthReportStorage.getMonthsReport().keySet()) {
-            List<MonthReport> monthlyReports = new ArrayList<>();
-            monthlyReports = monthReportStorage.getMonthsReport().get(month);
-           MonthReport monthReport = new MonthReport();
-            System.out.println("Месяц:\t\t\t" + nameRU.getName(month) );
-            for (int i = 0; i < monthlyReports.size(); i++) {
-                monthReport = monthlyReports.get(i);
+            System.out.println("Месяц:\t\t\t" + nameRU.getName(month));
 
+            List<MonthReport> monthlyReports = monthReportStorage.getMonthsReport().get(month);
+            int mostProfitableProduct = 0;
+            String mostProfitableProductName = "";
+            int theBiggestExpense = 0;
+            String theBiggestExpenseName = "";
+            for (MonthReport report : monthlyReports) {
 
-            if (!monthReport.isExpense){
-                if ((monthReport.quantity * monthReport.sumOfOne)>mostProfitableProduct){
-                    theBiggestExpense = monthReport.quantity * monthReport.sumOfOne;
-                    mostProfitableProductName = monthReport.itemName;
-                }
-            } else {
-                if ((monthReport.quantity * monthReport.sumOfOne)>theBiggestExpense){
-                    theBiggestExpense=(monthReport.quantity * monthReport.sumOfOne);
-                    theBiggestExpenseName = monthReport.itemName;
-
+                if (!report.isExpense){
+                    if ((report.quantity * report.sumOfOne) > mostProfitableProduct){
+                        mostProfitableProduct = report.quantity * report.sumOfOne;
+                        mostProfitableProductName = report.itemName;
+                    }
+                } else {
+                    if ((report.quantity * report.sumOfOne) > theBiggestExpense){
+                        theBiggestExpense = report.quantity * report.sumOfOne;
+                        theBiggestExpenseName = report.itemName;
+                    }
                 }
             }
-            }
-            System.out.println("----------------------------");
-            System.out.println("Самый прибыльный товар:\t"+ mostProfitableProductName + "\t"+ mostProfitableProduct  );
 
-            System.out.println("Самая большая трата:\t"+ theBiggestExpenseName+ "\t"+ theBiggestExpense );
-            System.out.println("----------------------------");
+            System.out.println("Самый прибыльный товар:\t" + mostProfitableProductName + "\t" + mostProfitableProduct);
+            System.out.println("Самая большая трата:\t" + theBiggestExpenseName + "\t" + theBiggestExpense);
+            System.out.println("--------------------------------------------------------");
         }
-
-
-
     }
 
-    }
-
-
+}
 
 
 

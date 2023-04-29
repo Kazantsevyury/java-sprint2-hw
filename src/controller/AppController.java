@@ -1,21 +1,18 @@
 package controller;
-import data.CsvReader;
 import data.MonthReportStorage;
 import data.YearReportStorage;
-import logic.MonthReportLoader;
-import logic.MonthsReportMaker;
-import logic.YearReportLoader;
-import logic.YearReportMaker;
+import logic.*;
 
 import java.util.Scanner;
 
 public class AppController {
 
-    CsvReader csvReaderreader = new CsvReader();
+
     int ACTUAL_YEAR = 2021;
     private final YearReportLoader yearReportLoader;
     private final YearReportMaker yearReportMaker;
     private final MonthReportLoader monthReportLoader;
+    private final  DataReconciliationMaker dataReconciliationMaker;
     private final MonthsReportMaker monthsReportMaker;
     public  AppController()
     {
@@ -27,6 +24,9 @@ public class AppController {
         MonthReportStorage monthReportStorage = new MonthReportStorage(ACTUAL_YEAR);
         monthReportLoader = new MonthReportLoader(monthReportStorage,ACTUAL_YEAR);
         monthsReportMaker = new MonthsReportMaker(monthReportStorage,ACTUAL_YEAR);
+
+        dataReconciliationMaker = new DataReconciliationMaker(yearReportStorage,monthReportStorage,ACTUAL_YEAR);
+
 
     }
     public void start()
@@ -48,29 +48,22 @@ public class AppController {
             else if (command.equals("1")  ) {
                 isMonthRepUp = true;
                 monthReportLoader.load();
-
             }
             else if (command.equals("2")  ) {
                 isYearRepUp = true;
-
                 yearReportLoader.load();
-
             }
             else if (command.equals("3") ) {
-
                 if (isYearRepUp && isMonthRepUp ) {
-                    //ööö
+                    dataReconciliationMaker.printDataReconciliation();
                 }
                 else {
                     System.out.println("Невозможно выполнить команду. Считайте месячный и годовой отчеты." );
                 }
-
             }
             else if (command.equals("4")  ) {
                 if ( isMonthRepUp ) {
                     monthsReportMaker.printMonthReport();
-
-
                 }
                 else {
                     System.out.println("Невозможно выполнить команду. Считайте месячные отчеты." );
@@ -80,9 +73,6 @@ public class AppController {
             else if (command.equals("5")  ) {
             if (isYearRepUp ) {
                 yearReportMaker.printMonthInYearReport();
-              //  System.out.println(yearReportMaker.bildUserMessage());
-
-
             }
             else {
                 System.out.println("Невозможно выполнить команду. Считайте годовой отчет." );
@@ -92,17 +82,9 @@ public class AppController {
             System.out.println("Такой команды нет" );
             }
         }
-
-
-
-
     }
-    public int getYearNum() {
-        return ACTUAL_YEAR;
 
-    }
-    private void printMenu()
-    {
+    private void printMenu() {
         System.out.println("\n"+
                 "Что вы хотите сделать ?\n" +
                 "\n" +

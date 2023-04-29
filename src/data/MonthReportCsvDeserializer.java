@@ -15,12 +15,7 @@ public class MonthReportCsvDeserializer {
         }
         return monthReports;
     }
-/*
-    public void load() {
-        CsvReader reader = new CsvReader();
-        List<String> rawYearInfoFields = reader.readFileContents("resources/y." + ACTUAL_YEAR + ".csv");
-    }
-*/
+
     public static MonthReport deserializeEntry(String playerCsvEntry) {
         String[] rawMonthReportFields = playerCsvEntry.split(",");
         MonthReport monthReport = new MonthReport();

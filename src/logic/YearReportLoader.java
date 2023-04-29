@@ -3,9 +3,7 @@ package logic;
 import data.YearReportStorage;
 
 public class YearReportLoader {
-    private int ACTUAL_YEAR ;
-
-
+    private final int ACTUAL_YEAR ;
     private final   YearReportStorage yearReportStorage;
 
     public YearReportLoader(YearReportStorage yearReportStorage, int ACTUAL_YEAR){
@@ -14,7 +12,7 @@ public class YearReportLoader {
     }
 
     public void load( ){
-        System.out.println("Read");
+        System.out.println("Чтение файла ...");
         yearReportStorage.load();
     }
 }
