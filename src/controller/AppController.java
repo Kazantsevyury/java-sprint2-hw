@@ -6,8 +6,6 @@ import logic.*;
 import java.util.Scanner;
 
 public class AppController {
-
-
     int ACTUAL_YEAR = 2021;
     private final YearReportLoader yearReportLoader;
     private final YearReportMaker yearReportMaker;
@@ -40,6 +38,10 @@ public class AppController {
 
         while (!exitFlag) {
             printMenu();
+            try {
+
+
+
             command = scanner.nextLine();
             if (command.equals("root")) {
                 System.out.println("Выход из программы...");
@@ -80,6 +82,14 @@ public class AppController {
             }
             else {
             System.out.println("Такой команды нет" );
+            }
+            }
+            catch (IllegalArgumentException e){
+                System.err.println("Ошибка: " + e.getMessage());
+            }catch (NullPointerException e) {
+                System.out.println("Ошибка: объект равен null");
+            } catch (Exception e) {
+                System.out.println("Ошибка: " + e.getMessage());
             }
         }
     }

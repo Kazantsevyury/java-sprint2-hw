@@ -6,7 +6,7 @@ public class GetMonthsNamesRU {
         if (monthNumber >= 1 && monthNumber <= 12) {
             return MONTHS_NAMES[monthNumber - 1];
         } else {
-            throw new IllegalArgumentException("Некорректный номер месяца: " + monthNumber);
+            throw new IllegalArgumentException( "Некорректный номер месяца: " + monthNumber);
         }
     }
 }
